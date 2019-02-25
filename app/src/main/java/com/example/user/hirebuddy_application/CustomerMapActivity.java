@@ -2,6 +2,7 @@ package com.example.user.hirebuddy_application;
 
 import android.Manifest;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,8 +25,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,7 +87,7 @@ public class CustomerMapActivity extends AppCompatActivity
     Location mlastLocation;
     LocationRequest mLocationRequest;
     DrawerLayout drawer;
-
+    private ImageView technician, mechanic;
     private static final int Request_User_Location_Code = 99;
     private Button mechanicRequest;
     private LatLng customerLocation;
@@ -91,6 +96,14 @@ public class CustomerMapActivity extends AppCompatActivity
     private String userID;
     private TextView drawerUsername, drawerEmail;
     private ImageView drawerImage;
+    private RelativeLayout selectionPortal;
+    private Animation slideUp;
+    private Animation slideOut;
+    private String selection;
+    private RadioGroup serviceProviderGroup;
+    private Button confirmOrder;
+    private RadioButton radio_Mechanic;
+    private RadioButton radio_technician;
 
 
     @Override
@@ -99,6 +112,9 @@ public class CustomerMapActivity extends AppCompatActivity
         setContentView(R.layout.activity_customer_map);
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        // Animation
+        slideUp = AnimationUtils.loadAnimation(this, R.anim.attribute_slide_up);
+        slideOut = AnimationUtils.loadAnimation(this, R.anim.attribute_slide_out);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -158,11 +174,20 @@ public class CustomerMapActivity extends AppCompatActivity
          * Mechanic Button click event
          */
         mechanicRequest = (Button) findViewById(R.id.requestBuddy);
+        selectionPortal = (RelativeLayout) findViewById(R.id.selectMechanicType);
+        confirmOrder = (Button) findViewById(R.id.confirmOrder);
+        technician = (ImageView) findViewById(R.id.TechnicianLogo);
+        mechanic = (ImageView) findViewById(R.id.mechanicLogo);
+        radio_Mechanic = (RadioButton) findViewById(R.id.radio_mechanic);
+        radio_technician = (RadioButton) findViewById(R.id.radio_technician);
 
         mechanicRequest.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                if(mechanicRequest.getText().equals("Hire a Buddy")) {
+                    selectionPortal.setVisibility(View.VISIBLE);
+                    selectionPortal.startAnimation(slideUp);
+                }
                 if(requestBol){
                     requestBol = false;
                     geoQuery.removeAllListeners();
@@ -185,10 +210,17 @@ public class CustomerMapActivity extends AppCompatActivity
                     if(serviceMarker != null){
                         serviceMarker.remove();
                     }
-
                     mechanicRequest.setText("Hire a Buddy");
+                }
+            }
+        });
 
-                }else{
+        confirmOrder.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                selectionPortal.startAnimation(slideOut);
+                selectionPortal.setVisibility(View.INVISIBLE);
+
                     requestBol = true;
 
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequest");
@@ -202,7 +234,7 @@ public class CustomerMapActivity extends AppCompatActivity
                     mechanicRequest.setText("Finding a Buddy...");
 
                     getClosestMechanic();
-                }
+
             }
         });
     }
@@ -235,7 +267,7 @@ public class CustomerMapActivity extends AppCompatActivity
                                 if(mechanicFound){
                                     return;
                                 }
-                                if(mechanicMap.get("MechanicType").equals("Mechanic")){
+                                if(mechanicMap.get("MechanicType").equals(selection)){
                                     mechanicFound = true;
                                     mechanicFoundID = dataSnapshot.getKey();
 
@@ -533,7 +565,6 @@ public class CustomerMapActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-
                     drawerUsername.setText(dataSnapshot.getValue().toString());
                 }
             }
@@ -570,5 +601,30 @@ public class CustomerMapActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+    }
+
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        switch(view.getId()) {
+            case R.id.radio_mechanic:
+                if (checked){
+                    selection = "Mechanic";
+                    confirmOrder.setClickable(true);
+                    radio_technician.setChecked(false);
+                    mechanic.setColorFilter(Color.BLACK);
+                    technician.setColorFilter(Color.WHITE);
+
+                }
+                break;
+            case R.id.radio_technician:
+                if (checked){
+                    selection = "Technician";
+                    confirmOrder.setClickable(true);
+                    radio_Mechanic.setChecked(false);
+                    technician.setColorFilter(Color.BLACK);
+                    mechanic.setColorFilter(Color.WHITE);
+                }
+                break;
+        }
     }
 }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "356071122709",
+    "firebase_url": "https://hirebuddy-application-230518.firebaseio.com",
+    "project_id": "hirebuddy-application-230518",
+    "storage_bucket": "hirebuddy-application-230518.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356071122709:android:6c82d873d728e8a5",
+        "android_client_info": {
+          "package_name": "com.example.user.hirebuddy_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356071122709-efttb6ru85gnhevlifa87v5e5ggqiplc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user.hirebuddy_application",
+            "certificate_hash": "29d857884bdc0d1c487cd27192226fd4fa175049"
+          }
+        },
+        {
+          "client_id": "356071122709-am7u5rts4ahpu4ekjc8tppo4ntvc4p37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMuiPMpXpTW8r9p884RXCMkbwmetdPmZI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356071122709-am7u5rts4ahpu4ekjc8tppo4ntvc4p37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/bg_common_background"
+    tools:context=".AboutUsActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout01"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="1dp"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/backbutton"
+            android:layout_width="35dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_arrow_back_"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="About Us"
+            android:textSize="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="75dp"
+            android:fontFamily="@font/century_gothic"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/logo6"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:text="(HireBuddy)"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/sweet_hipster"
+            android:textSize="65dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="HireBuddy is a Online Automobile Service Assistance that connects Customer and Mechanic via GPS in real time. HireBuddy assures Convenience, Reliability and Saftly and it is coming up with a solution which helps you to get the service of the most suitable person in the area to recover the vehicle failure."
+            android:fontFamily="@font/century_gothic"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/supportText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="450dp"
+            android:text="Support - Customers"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/century_gothic"
+            android:layout_marginLeft="15dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="480dp"
+            android:text="+947 71 636 278"
+            android:textColor="#F0B501"
+            android:fontFamily="@font/century_gothic"
+            android:layout_marginLeft="15dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="530dp"
+            android:text="Email"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/century_gothic"
+            android:layout_marginLeft="15dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="560dp"
+            android:text="neofedz@gmail.com"
+            android:textColor="#F0B501"
+            android:fontFamily="@font/century_gothic"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="600dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Your feedback is important to us in order to make HireBuddy better for you."
+            android:fontFamily="@font/century_gothic"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="690dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/century_gothic"
+            android:text="version 1.0"
+            android:textColor="@color/white" />
+
+            />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

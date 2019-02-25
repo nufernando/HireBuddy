@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MechanicMapActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_mechanic_map" />
+
+    <Button
+        android:id="@+id/fab"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_hamburger"
+        />
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/customerInfo"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal"
+    android:background="@drawable/ele_userdetails"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/customerProfileImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_unknown"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        />
+
+    <RelativeLayout
+        android:layout_below="@+id/customerProfileImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/customerName"
+            android:text="Customer Name"
+            android:fontFamily="@font/century_gothic"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/customerEmail"
+            android:text="Customer Name"
+            android:layout_below="@+id/customerName"
+            android:fontFamily="@font/century_gothic"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="15dp"
+            android:layout_marginBottom="10dp"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mechanicDetails"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="@drawable/ele_userdetails"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <ImageView
+                android:id="@+id/hireBuddyLogo"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logo6"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                />
+
+                <RelativeLayout
+                    android:layout_below="@+id/hireBuddyLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/welcomeMessage"
+                        android:text="Welcome to HireBuddy"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/white"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        />
+
+                    <View
+                        android:layout_below="@+id/welcomeMessage"
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#044275" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/whoAreYou"
+                        android:text="Help us to know you better,"
+                        android:layout_below="@+id/line1"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/white"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="15dp"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/mechanicType"
+                        android:layout_below="@+id/whoAreYou"
+                        android:layout_width="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <RadioButton android:id="@+id/radio_mechanic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="I'm a Mechanic"
+                            android:fontFamily="@font/century_gothic"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:onClick="onRadioButtonClicked"/>
+
+                        <RadioButton android:id="@+id/radio_technician"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="I'm a Technician"
+                            android:fontFamily="@font/century_gothic"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:onClick="onRadioButtonClicked"
+                            />
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

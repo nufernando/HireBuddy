@@ -96,10 +96,11 @@ public class CustomerMapActivity extends AppCompatActivity
     private String userID;
     private TextView drawerUsername, drawerEmail;
     private ImageView drawerImage;
-    private RelativeLayout selectionPortal;
+    private RelativeLayout selectionPortal, questionPortal,
+            question1, question2;
     private Animation slideUp;
     private Animation slideOut;
-    private String selection;
+    private String selection, fuelTypeSelection;
     private RadioGroup serviceProviderGroup;
     private Button confirmOrder;
     private RadioButton radio_Mechanic;
@@ -161,6 +162,7 @@ public class CustomerMapActivity extends AppCompatActivity
         getCustomerUsernameDatabaseInstance();
         getCustomerEmailDatabaseInstance();
         getCustomerImageDatabaseInstance();
+        viewWelcomeMessage();
 
         drawerImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +182,9 @@ public class CustomerMapActivity extends AppCompatActivity
         mechanic = (ImageView) findViewById(R.id.mechanicLogo);
         radio_Mechanic = (RadioButton) findViewById(R.id.radio_mechanic);
         radio_technician = (RadioButton) findViewById(R.id.radio_technician);
+        questionPortal = (RelativeLayout) findViewById(R.id.customerDetails);
+        question1 = (RelativeLayout) findViewById(R.id.q01);
+        question2 = (RelativeLayout) findViewById(R.id.q02);
 
         mechanicRequest.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -626,5 +631,52 @@ public class CustomerMapActivity extends AppCompatActivity
                 }
                 break;
         }
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+        boolean checked2 = ((RadioButton) view).isChecked();
+        switch(view.getId()) {
+            case R.id.radio_diesel:
+                if (checked2)
+                    rootRef.child("CustomerVehicleFuleType").setValue("Diesel Vehicle");
+                    break;
+            case R.id.radio_petrol:
+                if (checked2)
+                    rootRef.child("CustomerVehicleFuleType").setValue("Petrol Vehicle");
+                    break;
+            case R.id.radio_hybrid:
+                if (checked2)
+                    rootRef.child("CustomerVehicleFuleType").setValue("Hybrid Vehicle");
+                    break;
+            case R.id.radio_batteryPowered:
+                if (checked2)
+                    rootRef.child("CustomerVehicleFuleType").setValue("Battery Powered Vehicle");
+                    break;
+        }
+        question1.setVisibility(View.INVISIBLE);
+        question2.setVisibility(View.VISIBLE);
+        question2.startAnimation(slideOut);
+    }
+    /**
+     *Collect Customer Details
+     */
+    private void viewWelcomeMessage() {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+        DatabaseReference fuelTypeRef = rootRef.child("CustomerVehicleBrand");
+        fuelTypeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    if(dataSnapshot.getValue().toString().equals("NA")){
+                        questionPortal.setVisibility(View.VISIBLE);
+                        questionPortal.startAnimation(slideUp);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

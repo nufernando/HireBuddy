@@ -136,6 +136,8 @@ public class CustomerLoginActivity extends AppCompatActivity implements View.OnC
                                 hashMap.put("CustomerEmail", email);
                                 hashMap.put("CustomerName", name);
                                 hashMap.put("CustomerProfileImage", photoURL);
+                                hashMap.put("CustomerVehicleFuleType", "NA");
+                                hashMap.put("CustomerVehicleBrand", "NA");
                                 customerDetailsRef.updateChildren(hashMap);
                             }
                         }

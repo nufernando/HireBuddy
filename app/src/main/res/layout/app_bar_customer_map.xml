@@ -34,16 +34,16 @@
         android:background="@drawable/ele_userdetails"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:visibility="gone">
+>
 
     <RelativeLayout
         android:id="@+id/selectPortal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         >
 
         <RelativeLayout
-            android:layout_below="@+id/hireBuddyLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -54,7 +54,6 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/whoAreYou"
                 android:text="I'm lookin for a,"
-                android:layout_below="@+id/line1"
                 android:fontFamily="@font/century_gothic"
                 android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
@@ -153,6 +152,165 @@
         </RelativeLayout>
 
     </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customerDetails"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="@drawable/ele_userdetails"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+            <ImageView
+                android:id="@+id/hireBuddyLogo"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logo6"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                />
+
+            <RelativeLayout
+                android:layout_below="@+id/hireBuddyLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/q01"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/welcomeMessage"
+                    android:text="Welcome to HireBuddy"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    />
+
+                <View
+                    android:layout_below="@+id/welcomeMessage"
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#044275" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vehcleType"
+                    android:text="Help us to know you better,
+                I'm using a"
+                    android:layout_below="@+id/line1"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/fuelType"
+                    android:layout_below="@+id/vehcleType"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+
+                    <RadioButton android:id="@+id/radio_diesel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diesel Vehicle"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"
+                        android:onClick="onRadioButtonClicked"/>
+
+                    <RadioButton android:id="@+id/radio_petrol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Petrol Vehicle"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"
+                        android:onClick="onRadioButtonClicked"
+                        />
+
+                    <RadioButton android:id="@+id/radio_hybrid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hybrid Vehicle"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"
+                        android:onClick="onRadioButtonClicked"
+                        />
+
+                    <RadioButton android:id="@+id/radio_batteryPowered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Battery Powered Vehicle"
+                        android:fontFamily="@font/century_gothic"
+                        android:textColor="@color/white"
+                        android:buttonTint="@color/white"
+                        android:onClick="onRadioButtonClicked"
+                        />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_below="@+id/hireBuddyLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/q02"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vehcleBrand"
+                    android:text="I owned,"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_below="@+id/vehcleBrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

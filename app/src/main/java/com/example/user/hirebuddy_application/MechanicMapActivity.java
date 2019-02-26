@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -526,8 +525,8 @@ public class MechanicMapActivity extends AppCompatActivity
 
     private void viewWelcomMessage() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Mechanics").child(userId);
-        DatabaseReference usernameDatabaseRef = rootRef.child("MechanicType");
-        usernameDatabaseRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference mechanicTypeDatabaseRef = rootRef.child("MechanicType");
+        mechanicTypeDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){

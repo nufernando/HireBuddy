@@ -13,6 +13,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.directions.route.AbstractRouting;
+import com.directions.route.Route;
+import com.directions.route.RouteException;
+import com.directions.route.Routing;
+import com.directions.route.RoutingListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -45,6 +51,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +60,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import common.PredefineMethods;
@@ -59,7 +69,7 @@ import common.PredefineMethods;
 public class MechanicMapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener {
+        com.google.android.gms.location.LocationListener, RoutingListener {
 
         private GoogleMap mMap;
         GoogleApiClient mGoogleApiClient;
@@ -80,6 +90,8 @@ public class MechanicMapActivity extends AppCompatActivity
         private RadioGroup mechanicType;
         private RadioButton mechanicRadio, technicianRadio;
         private String mechanicTypeValue = "";
+        private List<Polyline> polylines;
+        private static final int[] COLORS = new int[]{android.R.color.holo_red_light};
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +104,8 @@ public class MechanicMapActivity extends AppCompatActivity
             {
                 checkUserLocationPermission();
             }
+
+            polylines = new ArrayList<>();
 
             new Thread(new Runnable() {
                 @Override
@@ -175,6 +189,7 @@ public class MechanicMapActivity extends AppCompatActivity
                     getAssignedCustomerInfo();
                 }else
                 {
+                    erasePolylines();
                     customerId = "";
                     if(serviceMarker != null){
                         serviceMarker.remove();
@@ -222,9 +237,10 @@ public class MechanicMapActivity extends AppCompatActivity
                     if(map.get(1) != null){
                         locationLng = Double.parseDouble(map.get(1).toString());
                     }
-                    LatLng mechanicLatLng = new LatLng(locationLat,locationLng);
-                        serviceMarker = mMap.addMarker(new MarkerOptions().position(mechanicLatLng).title("Service Location")
+                    LatLng serviceLatLng = new LatLng(locationLat,locationLng);
+                        serviceMarker = mMap.addMarker(new MarkerOptions().position(serviceLatLng).title("Service Location")
                                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pin)));
+                        getRouteToMarker(serviceLatLng);
                 }
             }
 
@@ -232,6 +248,17 @@ public class MechanicMapActivity extends AppCompatActivity
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    private void getRouteToMarker(LatLng serviceLatLng) {
+        Routing routing = new Routing.Builder()
+                .key("AIzaSyDQodJxByKZYCNG277QUsI48lVAmnm4W_c")
+                .travelMode(AbstractRouting.TravelMode.DRIVING)
+                .withListener(this)
+                .alternativeRoutes(false)
+                .waypoints(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()), serviceLatLng)
+                .build();
+        routing.execute();
     }
 
     /**
@@ -556,6 +583,57 @@ public class MechanicMapActivity extends AppCompatActivity
         }mechanicDetails.startAnimation(slideOut);
         mechanicDetails.setVisibility(View.INVISIBLE);
         Toast.makeText(MechanicMapActivity.this,"Thank You!" , Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+        if(e != null) {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRoutingStart() {
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
+        if(polylines.size()>0) {
+            for (Polyline poly : polylines) {
+                poly.remove();
+            }
+        }
+
+        polylines = new ArrayList<>();
+        //add route(s) to the map.
+        for (int i = 0; i <route.size(); i++) {
+
+            //In case of more than 5 alternative routes
+            int colorIndex = i % COLORS.length;
+
+            PolylineOptions polyOptions = new PolylineOptions();
+            polyOptions.color(getResources().getColor(COLORS[colorIndex]));
+            polyOptions.width(10 + i * 3);
+            polyOptions.addAll(route.get(i).getPoints());
+            Polyline polyline = mMap.addPolyline(polyOptions);
+            polylines.add(polyline);
+
+            Toast.makeText(getApplicationContext(),"Route "+ (i+1) +": distance - "+ route.get(i).getDistanceValue()+": duration - "+ route.get(i).getDurationValue(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+    }
+
+    private void erasePolylines(){
+        for(Polyline line : polylines){
+            line.remove();;
+        }
+
+        polylines.clear();
     }
 }
 

@@ -1,0 +1,27 @@
+<resources>
+    <string-array name="spinnerItems">
+        <item>Other Brand</item>
+        <item>Audi</item>
+        <item>Hyundai</item>
+        <item>Skoda</item>
+        <item>Mini</item>
+        <item>Land Rover</item>
+        <item>Kia</item>
+        <item>Porsche</item>
+        <item>Chevrolet</item>
+        <item>Toyota</item>
+        <item>Mitsubishi</item>
+        <item>Mercedes</item>
+        <item>Nissan</item>
+        <item>Suzuki</item>
+        <item>Tata</item>
+        <item>Mahindra</item>
+        <item>BMW</item>
+        <item>Subaru</item>
+        <item>Toyota</item>
+        <item>Fiat</item>
+        <item>Ford</item>
+        <item>Laylend</item>
+        <item>Mazda</item>
+    </string-array>
+</resources>

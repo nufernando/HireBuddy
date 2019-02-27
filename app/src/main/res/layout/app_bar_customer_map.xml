@@ -34,13 +34,14 @@
         android:background="@drawable/ele_userdetails"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:visibility="gone"
 >
 
     <RelativeLayout
         android:id="@+id/selectPortal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+
         >
 
         <RelativeLayout
@@ -164,11 +165,14 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:visibility="gone"
+
+
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
 
             >
             <ImageView
@@ -306,7 +310,27 @@
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:entries="@array/spinnerItems"/>
+
+                <Button
+                    android:id="@+id/confirmBrand"
+                    android:layout_below="@+id/spinner1"
+                    android:clickable="false"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="CONFIRM"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:fontFamily="@font/century_gothic"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:background="@color/white"
+                    />
+
+
 
             </RelativeLayout>
 

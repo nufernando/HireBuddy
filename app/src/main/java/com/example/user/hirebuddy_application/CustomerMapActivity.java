@@ -27,11 +27,13 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,11 +102,12 @@ public class CustomerMapActivity extends AppCompatActivity
             question1, question2;
     private Animation slideUp;
     private Animation slideOut;
-    private String selection, fuelTypeSelection;
+    private String selection, fuelTypeSelection, vehicleBrandString;
     private RadioGroup serviceProviderGroup;
-    private Button confirmOrder;
+    private Button confirmOrder, confirmBrand;
     private RadioButton radio_Mechanic;
     private RadioButton radio_technician;
+    private Spinner vehicleBrands;
 
 
     @Override
@@ -185,6 +188,30 @@ public class CustomerMapActivity extends AppCompatActivity
         questionPortal = (RelativeLayout) findViewById(R.id.customerDetails);
         question1 = (RelativeLayout) findViewById(R.id.q01);
         question2 = (RelativeLayout) findViewById(R.id.q02);
+        vehicleBrands = (Spinner) findViewById(R.id.spinner1);
+        confirmBrand = (Button) findViewById(R.id.confirmBrand);
+
+        vehicleBrands.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                confirmBrand.setClickable(true);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
+        confirmBrand.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                vehicleBrandString = vehicleBrands.getItemAtPosition(vehicleBrands.getSelectedItemPosition()).toString();
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+                rootRef.child("CustomerVehicleBrand").setValue(vehicleBrandString);
+
+                questionPortal.startAnimation(slideOut);
+                questionPortal.setVisibility(View.INVISIBLE);
+                Toast.makeText(CustomerMapActivity.this,"Thank You!" , Toast.LENGTH_SHORT).show();
+            }
+        });
 
         mechanicRequest.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -226,19 +253,19 @@ public class CustomerMapActivity extends AppCompatActivity
                 selectionPortal.startAnimation(slideOut);
                 selectionPortal.setVisibility(View.INVISIBLE);
 
-                    requestBol = true;
+                requestBol = true;
 
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequest");
-                    GeoFire geoFire = new GeoFire(ref);
-                    geoFire.setLocation(userID, new GeoLocation(mlastLocation.getLatitude(), mlastLocation.getLongitude()));
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequest");
+                GeoFire geoFire = new GeoFire(ref);
+                geoFire.setLocation(userID, new GeoLocation(mlastLocation.getLatitude(), mlastLocation.getLongitude()));
 
-                    customerLocation = new LatLng(mlastLocation.getLatitude(), mlastLocation.getLongitude());
-                    serviceMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title("I'm Here")
-                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pin)));
+                customerLocation = new LatLng(mlastLocation.getLatitude(), mlastLocation.getLongitude());
+                serviceMarker = mMap.addMarker(new MarkerOptions().position(customerLocation).title("I'm Here")
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pin)));
 
-                    mechanicRequest.setText("Finding a Buddy...");
+                mechanicRequest.setText("Finding a Buddy...");
 
-                    getClosestMechanic();
+                getClosestMechanic();
 
             }
         });
@@ -576,7 +603,7 @@ public class CustomerMapActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
- }
+    }
     private void getCustomerEmailDatabaseInstance(){
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
         DatabaseReference emailDatabaseRef = rootRef.child("CustomerEmail");
@@ -638,23 +665,23 @@ public class CustomerMapActivity extends AppCompatActivity
             case R.id.radio_diesel:
                 if (checked2)
                     rootRef.child("CustomerVehicleFuleType").setValue("Diesel Vehicle");
-                    break;
+                break;
             case R.id.radio_petrol:
                 if (checked2)
                     rootRef.child("CustomerVehicleFuleType").setValue("Petrol Vehicle");
-                    break;
+                break;
             case R.id.radio_hybrid:
                 if (checked2)
                     rootRef.child("CustomerVehicleFuleType").setValue("Hybrid Vehicle");
-                    break;
+                break;
             case R.id.radio_batteryPowered:
                 if (checked2)
                     rootRef.child("CustomerVehicleFuleType").setValue("Battery Powered Vehicle");
-                    break;
+                break;
         }
         question1.setVisibility(View.INVISIBLE);
         question2.setVisibility(View.VISIBLE);
-        question2.startAnimation(slideOut);
+        question2.startAnimation(slideUp);
     }
     /**
      *Collect Customer Details
@@ -679,4 +706,5 @@ public class CustomerMapActivity extends AppCompatActivity
             }
         });
     }
+
 }

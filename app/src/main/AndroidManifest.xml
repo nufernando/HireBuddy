@@ -45,9 +45,7 @@
         <activity
             android:name=".MechanicMapActivity"
             android:label="@string/title_activity_mechanic_map" />
-        <activity
-            android:name=".TechnicianMapActivity"
-            android:label="@string/title_activity_technician_map" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -58,7 +56,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CustomerLoginActivity" />
-        <activity android:name=".TechnicianLoginActivity" />
         <activity android:name=".MechanicLoginActivity" />
     </application>
 

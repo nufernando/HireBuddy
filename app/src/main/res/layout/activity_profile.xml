@@ -72,15 +72,24 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="200dp"
             android:layout_marginRight="15dp"
-            android:background="#044275" />
+            android:background="#044275"
+            android:layout_marginTop="200dp"
+             />
     </RelativeLayout>
+
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_below="@+id/layout02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout02"
+
         android:layout_marginTop="-1dp">
 
         <TextView
@@ -158,8 +167,121 @@
             android:inputType="textPassword"
             android:textColor="@color/white"/>
 
+        <View
+            android:id="@+id/line2"
+            android:layout_below="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#044275"/>
+
+        <TextView
+            android:id="@+id/heading04"
+            android:layout_below="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="45dp"
+            android:text="Vehicle Type"
+            android:fontFamily="@font/century_gothic"
+            android:textSize="15dp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/vehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/heading04"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Example Vehicle"
+            android:fontFamily="@font/century_gothic"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/heading05"
+            android:layout_below="@+id/vehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="45dp"
+            android:text="Vehicle Brand"
+            android:fontFamily="@font/century_gothic"
+            android:textSize="15dp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/vehicleBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/heading05"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Example Vehicle"
+            android:fontFamily="@font/century_gothic"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+
+        <TextView
+            android:id="@+id/heading06"
+            android:layout_below="@+id/vehicleBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="45dp"
+            android:text="Fuel Type"
+            android:fontFamily="@font/century_gothic"
+            android:textSize="15dp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/vehicleFuel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/heading06"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Example Fuel"
+            android:fontFamily="@font/century_gothic"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/heading07"
+            android:layout_below="@+id/vehicleFuel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="45dp"
+            android:text="Vehicle Number"
+            android:fontFamily="@font/century_gothic"
+            android:textSize="15dp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/vehicleNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/heading07"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="ABC - 1234"
+            android:fontFamily="@font/century_gothic"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
 
     </RelativeLayout>
+        </ScrollView>
+
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -184,6 +306,10 @@
                 android:background="@drawable/ic_arrow_back_"/>
 
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/heading01b"
@@ -228,7 +354,7 @@
             android:background="@color/white"
             />
 
-
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout

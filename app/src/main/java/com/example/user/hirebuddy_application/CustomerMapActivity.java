@@ -99,15 +99,16 @@ public class CustomerMapActivity extends AppCompatActivity
     private TextView drawerUsername, drawerEmail;
     private ImageView drawerImage;
     private RelativeLayout selectionPortal, questionPortal,
-            question1, question2;
+            question1, question2 , question3;
     private Animation slideUp;
     private Animation slideOut;
-    private String selection, fuelTypeSelection, vehicleBrandString;
+    private String selection, vehicleBrandString, vehiclCategoryString;
     private RadioGroup serviceProviderGroup;
-    private Button confirmOrder, confirmBrand;
+    private Button confirmOrder, confirmBrand, confirmCategory;
     private RadioButton radio_Mechanic;
     private RadioButton radio_technician;
     private Spinner vehicleBrands;
+    private Spinner vehicleCategory;
 
 
     @Override
@@ -188,8 +189,11 @@ public class CustomerMapActivity extends AppCompatActivity
         questionPortal = (RelativeLayout) findViewById(R.id.customerDetails);
         question1 = (RelativeLayout) findViewById(R.id.q01);
         question2 = (RelativeLayout) findViewById(R.id.q02);
+        question3 = (RelativeLayout) findViewById(R.id.q03);
         vehicleBrands = (Spinner) findViewById(R.id.spinner1);
+        vehicleCategory = (Spinner) findViewById(R.id.spinner2);
         confirmBrand = (Button) findViewById(R.id.confirmBrand);
+        confirmCategory = (Button) findViewById(R.id.confirmCategory);
 
         vehicleBrands.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -203,13 +207,27 @@ public class CustomerMapActivity extends AppCompatActivity
         confirmBrand.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                vehicleBrandString = vehicleBrands.getItemAtPosition(vehicleBrands.getSelectedItemPosition()).toString();
+                vehicleBrandString = Integer.toString(vehicleBrands.getSelectedItemPosition());
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
                 rootRef.child("CustomerVehicleBrand").setValue(vehicleBrandString);
 
-                questionPortal.startAnimation(slideOut);
-                questionPortal.setVisibility(View.INVISIBLE);
-                Toast.makeText(CustomerMapActivity.this,"Thank You!" , Toast.LENGTH_SHORT).show();
+                question2.setVisibility(View.INVISIBLE);
+                question1.setVisibility(View.VISIBLE);
+                question1.startAnimation(slideUp);
+            }
+        });
+
+        confirmCategory.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                vehiclCategoryString = Integer.toString(vehicleCategory.getSelectedItemPosition());
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+                rootRef.child("CustomerVehicleCategory").setValue(vehiclCategoryString);
+
+                question3.setVisibility(View.INVISIBLE);
+                question2.setVisibility(View.VISIBLE);
+                question2.startAnimation(slideUp);
+
             }
         });
 
@@ -659,36 +677,44 @@ public class CustomerMapActivity extends AppCompatActivity
                 break;
         }
 
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
-        boolean checked2 = ((RadioButton) view).isChecked();
-        switch(view.getId()) {
-            case R.id.radio_diesel:
-                if (checked2)
-                    rootRef.child("CustomerVehicleFuleType").setValue("Diesel Vehicle");
-                break;
-            case R.id.radio_petrol:
-                if (checked2)
-                    rootRef.child("CustomerVehicleFuleType").setValue("Petrol Vehicle");
-                break;
-            case R.id.radio_hybrid:
-                if (checked2)
-                    rootRef.child("CustomerVehicleFuleType").setValue("Hybrid Vehicle");
-                break;
-            case R.id.radio_batteryPowered:
-                if (checked2)
-                    rootRef.child("CustomerVehicleFuleType").setValue("Battery Powered Vehicle");
-                break;
-        }
-        question1.setVisibility(View.INVISIBLE);
-        question2.setVisibility(View.VISIBLE);
-        question2.startAnimation(slideUp);
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+            boolean checked2 = ((RadioButton) view).isChecked();
+            switch (view.getId()) {
+                case R.id.radio_diesel:
+                    if (checked2)
+                        rootRef.child("CustomerVehicleFuleType").setValue("Diesel Vehicle");
+                        openQuestionPortal();
+                    break;
+                case R.id.radio_petrol:
+                    if (checked2)
+                        rootRef.child("CustomerVehicleFuleType").setValue("Petrol Vehicle");
+                        openQuestionPortal();
+                    break;
+                case R.id.radio_hybrid:
+                    if (checked2)
+                        rootRef.child("CustomerVehicleFuleType").setValue("Hybrid Vehicle");
+                    openQuestionPortal();
+                    break;
+                case R.id.radio_batteryPowered:
+                    if (checked2)
+                        rootRef.child("CustomerVehicleFuleType").setValue("Battery Powered Vehicle");
+                    openQuestionPortal();
+                    break;
+            }
     }
+
+    private void openQuestionPortal() {
+        questionPortal.startAnimation(slideOut);
+        questionPortal.setVisibility(View.INVISIBLE);
+        Toast.makeText(CustomerMapActivity.this, "Thank You!", Toast.LENGTH_SHORT).show();
+    }
+
     /**
      *Collect Customer Details
      */
     private void viewWelcomeMessage() {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
-        DatabaseReference fuelTypeRef = rootRef.child("CustomerVehicleBrand");
+        DatabaseReference fuelTypeRef = rootRef.child("CustomerVehicleFuleType");
         fuelTypeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

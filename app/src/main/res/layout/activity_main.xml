@@ -17,12 +17,12 @@
 
 
         <ImageView
-        android:id="@+id/imgView_logo"
-        android:layout_width="155dp"
-        android:layout_height="180dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:layout_centerHorizontal="true" />
+            android:id="@+id/imgView_logo"
+            android:layout_width="155dp"
+            android:layout_height="180dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_centerHorizontal="true" />
 
         <RelativeLayout
             android:id="@+id/relluay3"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgView_logo"
-            tools:ignore="UnknownId">
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/customer"

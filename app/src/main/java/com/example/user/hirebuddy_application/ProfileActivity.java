@@ -17,10 +17,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,22 +36,25 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private Button backButton;
-    private String userID;
-    private TextView name, email, password;
+    private String userID, fuelTypeString = "NA";
+    private TextView name, email, password, vehicleType,
+            vehicleBrand, vehicleFuelType, vehicleNumber;
     private ImageView profilePic;
-    private RelativeLayout main1 , main2 , main3, main4;
-    private Button main2Back, main3Back, main4Back, changeImage, save1, save2;
+    private RelativeLayout main1 , main2 , main3, main4, main5, main6, main7, main8;
+    private Button main2Back, main3Back, main4Back, main5Back, main6Back, main7Back,
+            main8Back, changeImage, save1, save2 ,save5, save6, save7, save8;
     private Animation slideUp;
     private Animation slideOut;
-    private EditText name2, email2, password2;
+    private EditText name2, email2, password2, vn_letters, vn_numberic;
     private Uri resultUri;
+    private Spinner vehicleType2, vehicleBrand2;
+    private RadioGroup vehcielFuelType2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +66,42 @@ public class ProfileActivity extends AppCompatActivity {
         name = (TextView) findViewById(R.id.name);
         email = (TextView) findViewById(R.id.email);
         password = (TextView) findViewById(R.id.password);
+        vehicleType = (TextView) findViewById(R.id.vehicleType);
+        vehicleBrand = (TextView) findViewById(R.id.vehicleBrand);
+        vehicleFuelType = (TextView) findViewById(R.id.vehicleFuel);
+        vehicleNumber = (TextView) findViewById(R.id.vehicleNumber);
         profilePic = (ImageView) findViewById(R.id.image_frame);
         main1 = (RelativeLayout) findViewById(R.id.main1);
         main2 = (RelativeLayout) findViewById(R.id.main2);
         main3 = (RelativeLayout) findViewById(R.id.main3);
         main4 = (RelativeLayout) findViewById(R.id.main4);
+        main5 = (RelativeLayout) findViewById(R.id.main5);
+        main6 = (RelativeLayout) findViewById(R.id.main6);
+        main7 = (RelativeLayout) findViewById(R.id.main7);
+        main8 = (RelativeLayout) findViewById(R.id.main8);
         main2Back = (Button) findViewById(R.id.backbutton2);
         main3Back = (Button) findViewById(R.id.backbutton3);
         main4Back = (Button) findViewById(R.id.backbutton4);
+        main5Back = (Button) findViewById(R.id.backbutton5);
+        main6Back = (Button) findViewById(R.id.backbutton6);
+        main7Back = (Button) findViewById(R.id.backbutton7);
+        main8Back = (Button) findViewById(R.id.backbutton8);
+        backButton = (Button) findViewById(R.id.backbutton);
         name2 = (EditText) findViewById(R.id.name2);
         email2 = (EditText) findViewById(R.id.email2);
         password2 = (EditText) findViewById(R.id.password2);
         changeImage = (Button) findViewById(R.id.change_image);
         save1 = (Button) findViewById(R.id.save_name);
         save2 = (Button) findViewById(R.id.save_email);
+        save5 = (Button) findViewById(R.id.save_vehcileType);
+        save6 = (Button) findViewById(R.id.save_vehcileBrand);
+        save7 = (Button) findViewById(R.id.save_vehcileFueltype);
+        save8 = (Button) findViewById(R.id.save_vehcileNumber);
+        vehicleType2 = (Spinner) findViewById(R.id.vehicleType2);
+        vehicleBrand2 = (Spinner) findViewById(R.id.vehicleBrand2);
+        vehcielFuelType2 = (RadioGroup) findViewById(R.id.vehicleFuelType2);
+        vn_letters = (EditText) findViewById(R.id.vehicleNumber_Letters);
+        vn_numberic= (EditText) findViewById(R.id.vehicleNumber_Numberic);
 
         // Animation
         slideUp = AnimationUtils.loadAnimation(this, R.anim.attribute_slide_up);
@@ -83,6 +110,10 @@ public class ProfileActivity extends AppCompatActivity {
         getCustomerUsernameDatabaseInstance();
         getCustomerEmailDatabaseInstance();
         getCustomerImageDatabaseInstance();
+        getCustomerVehicleTypeDatabaseInstance();
+        getCustomerVehicleBrandDatabaseInstance();
+        getCustomerVehicleFuelTypeDatabaseInstance();
+        getCustomerVehicleNumberDatabaseInstance();
 
         name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,13 +125,55 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        email.setOnClickListener(new View.OnClickListener() {
+        vehicleType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 main1.setVisibility(View.INVISIBLE);
 
+                main5.setVisibility(View.VISIBLE);
+                main5.startAnimation(slideUp);
+            }
+        });
+
+        vehicleBrand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main1.setVisibility(View.INVISIBLE);
+
+                main6.setVisibility(View.VISIBLE);
+                main6.startAnimation(slideUp);
+            }
+        });
+
+        vehicleFuelType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main1.setVisibility(View.INVISIBLE);
+
+                main7.setVisibility(View.VISIBLE);
+                main7.startAnimation(slideUp);
+            }
+        });
+
+        vehicleNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main1.setVisibility(View.INVISIBLE);
+
+                main8.setVisibility(View.VISIBLE);
+                main8.startAnimation(slideUp);
+            }
+        });
+
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(ProfileActivity.this,"Edit feature is unavailable in current version" , Toast.LENGTH_SHORT).show();
+               /* main1.setVisibility(View.INVISIBLE);
+
                 main3.setVisibility(View.VISIBLE);
-                main3.startAnimation(slideUp);
+                main3.startAnimation(slideUp);*/
             }
         });
 
@@ -123,13 +196,52 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        save5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String vehicleCategoryString = Integer.toString(vehicleType2.getSelectedItemPosition());
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+                rootRef.child("CustomerVehicleCategory").setValue(vehicleCategoryString);
+            }
+        });
+
+        save6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String vehicleBrandString = Integer.toString(vehicleBrand2.getSelectedItemPosition());
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+                rootRef.child("CustomerVehicleBrand").setValue(vehicleBrandString);
+            }
+        });
+
+        save7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+                rootRef.child("CustomerVehicleFuleType").setValue(fuelTypeString);
+            }
+        });
+
+        save8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String value = vn_letters.getText().toString()+"-"+vn_numberic.getText().toString();
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+                rootRef.child("CustomerVehicleNumber").setValue(value);
+            }
+        });
+
         password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                main1.setVisibility(View.INVISIBLE);
+
+                Toast.makeText(ProfileActivity.this,"Edit feature is unavailable in current version" , Toast.LENGTH_SHORT).show();
+                /*main1.setVisibility(View.INVISIBLE);
 
                 main4.setVisibility(View.VISIBLE);
-                main4.startAnimation(slideUp);
+                main4.startAnimation(slideUp);*/
             }
         });
 
@@ -140,9 +252,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
-        backButton = (Button) findViewById(R.id.backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,6 +289,125 @@ public class ProfileActivity extends AppCompatActivity {
                 main1.setVisibility(View.VISIBLE);
                 main1.startAnimation(slideUp);
             }
+        });
+
+        main5Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main5.setVisibility(View.INVISIBLE);
+
+                main1.setVisibility(View.VISIBLE);
+                main1.startAnimation(slideUp);
+            }
+        });
+
+        main6Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main6.setVisibility(View.INVISIBLE);
+
+                main1.setVisibility(View.VISIBLE);
+                main1.startAnimation(slideUp);
+            }
+        });
+
+        main7Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main7.setVisibility(View.INVISIBLE);
+
+                main1.setVisibility(View.VISIBLE);
+                main1.startAnimation(slideUp);
+            }
+        });
+
+        main8Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main8.setVisibility(View.INVISIBLE);
+
+                main1.setVisibility(View.VISIBLE);
+                main1.startAnimation(slideUp);
+            }
+        });
+    }
+
+    private void getCustomerVehicleNumberDatabaseInstance() {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+        DatabaseReference vehicleFuelTypedRef = rootRef.child("CustomerVehicleNumber");
+        vehicleFuelTypedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    vehicleNumber.setText(dataSnapshot.getValue().toString());
+                    if(!dataSnapshot.getValue().toString().equals("NA")) {
+                        String[] data = dataSnapshot.getValue().toString().split("-", 2);
+                        vn_letters.setText(data[0]);
+                        vn_numberic.setText(data[1]);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+    }
+
+    private void getCustomerVehicleFuelTypeDatabaseInstance() {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+        DatabaseReference vehicleFuelTypeRef = rootRef.child("CustomerVehicleFuleType");
+        vehicleFuelTypeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    vehicleFuelType.setText(dataSnapshot.getValue().toString());
+
+                    if(dataSnapshot.getValue().toString().equals("Diesel Vehicle")){
+                        vehcielFuelType2.check(R.id.radio_diesel);
+                    }else if(dataSnapshot.getValue().toString().equals("Petrol Vehicle")){
+                        vehcielFuelType2.check(R.id.radio_petrol);
+                    }else if(dataSnapshot.getValue().toString().equals("Hybrid Vehicle")){
+                        vehcielFuelType2.check(R.id.radio_hybrid);
+                    }else if(dataSnapshot.getValue().toString().equals("Battery Powered Vehicle")){
+                        vehcielFuelType2.check(R.id.radio_batteryPowered);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+    }
+
+    private void getCustomerVehicleBrandDatabaseInstance() {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+        DatabaseReference vehicleBrandRef = rootRef.child("CustomerVehicleBrand");
+        vehicleBrandRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    vehicleBrand2.setSelection(Integer.parseInt(dataSnapshot.getValue().toString()));
+                    String v_brand = vehicleBrand2.getItemAtPosition(Integer.parseInt(dataSnapshot.getValue().toString())).toString();
+                    vehicleBrand.setText(v_brand);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+    }
+
+    private void getCustomerVehicleTypeDatabaseInstance() {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+        DatabaseReference vehicleTypeRef = rootRef.child("CustomerVehicleCategory");
+        vehicleTypeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    vehicleType2.setSelection(Integer.parseInt(dataSnapshot.getValue().toString()));
+                    String v_type = vehicleType2.getItemAtPosition(Integer.parseInt(dataSnapshot.getValue().toString())).toString();
+                    vehicleType.setText(v_type);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
     }
 
@@ -349,6 +577,29 @@ public class ProfileActivity extends AppCompatActivity {
                     });
                 }
             }
+        }
+    }
+
+    public void onRadioButtonClicked(View view) {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+        boolean checked2 = ((RadioButton) view).isChecked();
+        switch(view.getId()) {
+            case R.id.radio_diesel:
+                if (checked2)
+                    fuelTypeString = "Diesel Vehicle";
+                break;
+            case R.id.radio_petrol:
+                if (checked2)
+                    fuelTypeString = "Petrol Vehicle";
+                break;
+            case R.id.radio_hybrid:
+                if (checked2)
+                    fuelTypeString = "Hybrid Vehicle";
+                break;
+            case R.id.radio_batteryPowered:
+                if (checked2)
+                    fuelTypeString = "Battery Powered Vehicle";
+                break;
         }
     }
 }

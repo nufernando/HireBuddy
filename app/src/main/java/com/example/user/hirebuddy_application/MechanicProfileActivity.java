@@ -105,10 +105,12 @@ public class MechanicProfileActivity extends AppCompatActivity {
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                main1.setVisibility(View.INVISIBLE);
+
+                Toast.makeText(MechanicProfileActivity.this,"Edit feature is unavailable in current version" , Toast.LENGTH_SHORT).show();
+                /*main1.setVisibility(View.INVISIBLE);
 
                 main3.setVisibility(View.VISIBLE);
-                main3.startAnimation(slideUp);
+                main3.startAnimation(slideUp);*/
             }
         });
 
@@ -155,10 +157,12 @@ public class MechanicProfileActivity extends AppCompatActivity {
         password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                main1.setVisibility(View.INVISIBLE);
+
+                Toast.makeText(MechanicProfileActivity.this,"Edit feature is unavailable in current version" , Toast.LENGTH_SHORT).show();
+                /*main1.setVisibility(View.INVISIBLE);
 
                 main4.setVisibility(View.VISIBLE);
-                main4.startAnimation(slideUp);
+                main4.startAnimation(slideUp);*/
             }
         });
 

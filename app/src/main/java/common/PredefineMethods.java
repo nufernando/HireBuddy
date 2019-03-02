@@ -1,6 +1,9 @@
 package common;
 
+import com.example.user.hirebuddy_application.R;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class PredefineMethods {
@@ -20,7 +23,6 @@ public class PredefineMethods {
 
         return hour;
     }
-
 
 }
 

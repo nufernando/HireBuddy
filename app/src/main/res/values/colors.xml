@@ -5,6 +5,7 @@
     <color name="colorAccent">#5384C4</color>
     <color name="colorBlack">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="hintWhite">#b2b2b2</color>
     <color name="background_white">#F5F5F5</color>
     <color name="transparent">#00000000</color>
     <color name="gradientStart">#044275</color>

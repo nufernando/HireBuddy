@@ -11,7 +11,8 @@
         android:id="@+id/main1"
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+>
 
     <RelativeLayout
         android:id="@+id/layout01"
@@ -357,6 +358,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
+
     <RelativeLayout
         android:id="@+id/main3"
         android:visibility="gone"
@@ -505,6 +507,390 @@
             android:textStyle="bold"
             android:background="@color/white"
             />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/main5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layout_e1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="1dp"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/backbutton5"
+                android:layout_width="35dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/ic_arrow_back_"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/heading01e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+
+
+            <Spinner
+                android:id="@+id/vehicleType2"
+                android:layout_below="@+id/heading01e"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:entries="@array/spinnerCategory"/>
+
+
+
+            <Button
+                android:id="@+id/save_vehcileType"
+                android:layout_below="@+id/vehicleType2"
+                android:layout_marginTop="45dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="SAVE"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/century_gothic"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/white"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/main6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layout_f1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="1dp"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/backbutton6"
+                android:layout_width="35dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/ic_arrow_back_"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/heading01f"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Brand"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+
+
+            <Spinner
+                android:id="@+id/vehicleBrand2"
+                android:layout_below="@+id/heading01f"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:entries="@array/spinnerItems"/>
+
+
+
+            <Button
+                android:id="@+id/save_vehcileBrand"
+                android:layout_below="@+id/vehicleBrand2"
+                android:layout_marginTop="45dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="SAVE"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/century_gothic"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/white"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/main7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:id="@+id/layout_g1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="1dp"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/backbutton7"
+                android:layout_width="35dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/ic_arrow_back_"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/heading01g"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Fuel Type"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/vehicleFuelType2"
+                android:layout_below="@+id/heading01g"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <RadioButton android:id="@+id/radio_diesel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diesel Vehicle"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
+                    android:onClick="onRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radio_petrol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Petrol Vehicle"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
+                    android:onClick="onRadioButtonClicked"
+                    />
+
+                <RadioButton android:id="@+id/radio_hybrid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hybrid Vehicle"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
+                    android:onClick="onRadioButtonClicked"
+                    />
+
+                <RadioButton android:id="@+id/radio_batteryPowered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Battery Powered Vehicle"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
+                    android:onClick="onRadioButtonClicked"
+                    />
+            </RadioGroup>
+
+
+            <Button
+                android:id="@+id/save_vehcileFueltype"
+                android:layout_below="@+id/vehicleFuelType2"
+                android:layout_marginTop="45dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="SAVE"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/century_gothic"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/white"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/main8"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layout_h1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="1dp"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/backbutton8"
+                android:layout_width="35dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/ic_arrow_back_"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/heading01h"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Brand"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/vehicleNumber2"
+                android:layout_below="@+id/heading01h"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/mechanicTypeLogo"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/vehicleNumber_Letters"
+                        android:hint="Example : ABC"
+                        android:textColorHint="@color/hintWhite"
+                        android:layout_below="@+id/heading01h"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/et_bg"
+                        android:fontFamily="@font/century_gothic"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/TechnicianTypeLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+
+                    <EditText
+                        android:id="@+id/vehicleNumber_Numberic"
+                        android:hint="Example : 1234"
+                        android:textColorHint="@color/hintWhite"
+                        android:layout_below="@+id/heading01h"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:inputType="number"
+                        android:background="@drawable/et_bg"
+                        android:fontFamily="@font/century_gothic"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/save_vehcileNumber"
+                android:layout_below="@+id/vehicleNumber2"
+                android:layout_marginTop="45dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="SAVE"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/century_gothic"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/white"
+                />
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

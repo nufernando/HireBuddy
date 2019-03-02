@@ -161,10 +161,10 @@
         android:id="@+id/customerDetails"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:background="@drawable/ele_userdetails"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:visibility="gone"
 
 
         >
@@ -190,38 +190,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/q01"
-
+                android:visibility="gone"
                 >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/welcomeMessage"
-                    android:text="Welcome to HireBuddy"
-                    android:fontFamily="@font/century_gothic"
-                    android:textColor="@color/white"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="25dp"
-                    android:textStyle="bold"
-                    />
-
-                <View
-                    android:layout_below="@+id/welcomeMessage"
-                    android:id="@+id/line1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#044275" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/vehcleType"
-                    android:text="Help us to know you better,
-                I'm using a"
-                    android:layout_below="@+id/line1"
+                    android:text="I'm using a,"
                     android:fontFamily="@font/century_gothic"
                     android:textColor="@color/white"
                     android:layout_centerHorizontal="true"
@@ -286,6 +262,79 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:id="@+id/q03"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/welcomeMessage"
+                    android:text="Welcome to HireBuddy"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    />
+
+                <View
+                    android:layout_below="@+id/welcomeMessage"
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#044275" />
+
+                <TextView
+                    android:layout_below="@+id/line1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vehcleCategory"
+                    android:text="Help us to know you better, \n               I owned,"
+                    android:fontFamily="@font/century_gothic"
+                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_below="@+id/vehcleCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:entries="@array/spinnerCategory"/>
+
+                <Button
+                    android:id="@+id/confirmCategory"
+                    android:layout_below="@+id/spinner2"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="CONFIRM"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:fontFamily="@font/century_gothic"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:background="@color/white"
+                    />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_below="@+id/hireBuddyLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:visibility="gone"
                 android:id="@+id/q02"
                 >
@@ -294,7 +343,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/vehcleBrand"
-                    android:text="I owned,"
+                    android:layout_marginTop="60dp"
+                    android:text="I am lucky to have,"
                     android:fontFamily="@font/century_gothic"
                     android:textColor="@color/white"
                     android:layout_centerHorizontal="true"
@@ -316,7 +366,6 @@
                 <Button
                     android:id="@+id/confirmBrand"
                     android:layout_below="@+id/spinner1"
-                    android:clickable="false"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
@@ -330,9 +379,9 @@
                     android:background="@color/white"
                     />
 
-
-
             </RelativeLayout>
+
+
 
         </RelativeLayout>
     </RelativeLayout>

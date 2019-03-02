@@ -3,6 +3,8 @@
         <item>Other Brand</item>
         <item>Audi</item>
         <item>Hyundai</item>
+        <item>Piaggio</item>
+        <item>Bajaj</item>
         <item>Skoda</item>
         <item>Mini</item>
         <item>Land Rover</item>
@@ -23,5 +25,17 @@
         <item>Ford</item>
         <item>Laylend</item>
         <item>Mazda</item>
+    </string-array>
+
+
+    <string-array name="spinnerCategory">
+        <item>Other Category</item>
+        <item>Tuk Tuk</item>
+        <item>Bike</item>
+        <item>Car</item>
+        <item>Van</item>
+        <item>SUV</item>
+        <item>Heavy Vehicle</item>
+
     </string-array>
 </resources>

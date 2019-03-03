@@ -20,8 +20,6 @@ public class AboutUsActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (AboutUsActivity.this, CustomerMapActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

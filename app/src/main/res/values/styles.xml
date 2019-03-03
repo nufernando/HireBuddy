@@ -16,6 +16,18 @@
     </style>
 
 
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">#00db16</item>
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#ff033e
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/colorPrimaryDark
+        </item>
+    </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="Widget.AppCompat.Light.ActionBar.Solid" />
 

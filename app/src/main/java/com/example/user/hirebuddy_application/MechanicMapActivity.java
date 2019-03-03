@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.directions.route.AbstractRouting;
 import com.directions.route.Route;
 import com.directions.route.RouteException;
@@ -38,6 +37,7 @@ import android.support.v4.app.ActivityCompat;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -92,6 +92,8 @@ public class MechanicMapActivity extends AppCompatActivity
         private String mechanicTypeValue = "";
         private List<Polyline> polylines;
         private static final int[] COLORS = new int[]{android.R.color.holo_red_light};
+        private String switchValue = "OFF";
+        private Switch swithAvailability;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +138,7 @@ public class MechanicMapActivity extends AppCompatActivity
             mechanicType = (RadioGroup) findViewById(R.id.mechanicType);
             mechanicRadio = (RadioButton) findViewById(R.id.radio_mechanic);
             technicianRadio = (RadioButton) findViewById(R.id.radio_technician);
+            swithAvailability = (Switch) findViewById(R.id.switch_availability);
 
             // Animation
             slideUp = AnimationUtils.loadAnimation(this, R.anim.attribute_slide_up);
@@ -161,6 +164,24 @@ public class MechanicMapActivity extends AppCompatActivity
             getMechanicEmailDatabaseInstance();
             getMechanicImageDatabaseInstance();
             viewWelcomMessage();
+
+            swithAvailability.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        switchValue = "ON";
+                        Toast.makeText(MechanicMapActivity.this,"You are now Available" , Toast.LENGTH_SHORT).show();
+
+                    }
+                    else {
+                        switchValue = "OFF";
+                        Toast.makeText(MechanicMapActivity.this,"You are now Unavailable" , Toast.LENGTH_SHORT).show();
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MechanicAvailable");
+                        GeoFire geoFire = new GeoFire(ref);
+                        geoFire.removeLocation(userId);
+                    }
+                }
+            });
 
             drawerImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -434,17 +455,21 @@ public class MechanicMapActivity extends AppCompatActivity
             GeoFire geoFireAvailable = new GeoFire(refAvailable);
             GeoFire geoFireWorking = new GeoFire(refWorking);
 
-            switch (customerId){
-                case "":
-                    geoFireWorking.removeLocation(userId);
-                    geoFireAvailable.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
-                    break;
+            if(switchValue.equals("ON")){
+                switch (customerId){
+                    case "":
 
-                default:
-                    geoFireAvailable.removeLocation(userId);
-                    geoFireWorking.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
-                    break;
+                        geoFireWorking.removeLocation(userId);
+                        geoFireAvailable.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
+                        break;
+
+                    default:
+                        geoFireAvailable.removeLocation(userId);
+                        geoFireWorking.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
+                        break;
+                }
             }
+
         }
     }
 

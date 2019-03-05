@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,7 +30,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+
+
 
 public class CustomerLoginActivity extends AppCompatActivity implements View.OnClickListener,
         GoogleApiClient.OnConnectionFailedListener {
@@ -61,7 +65,7 @@ public class CustomerLoginActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_login);
-        social = (Button) findViewById(R.id.connect_social);
+        social = findViewById(R.id.connect_social);
         signIn = (SignInButton) findViewById(R.id.googlesign_in);
         signInText = (TextView) findViewById(R.id.googlesign_text);
         cEmail = (EditText)findViewById(R.id.email);
@@ -100,6 +104,7 @@ public class CustomerLoginActivity extends AppCompatActivity implements View.OnC
             public void onAuthStateChanged( FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user != null){
+
                     Intent intent = new Intent(CustomerLoginActivity.this, CustomerMapActivity.class);
                     startActivity(intent);
                     finish();
@@ -108,9 +113,6 @@ public class CustomerLoginActivity extends AppCompatActivity implements View.OnC
             }
         };
 
-        /**
-         * Customer Registration Process
-         */
         cRegistration = (Button) findViewById(R.id.registration);
         cRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +121,7 @@ public class CustomerLoginActivity extends AppCompatActivity implements View.OnC
                 final  String password = cPassword.getText().toString();
 
                 if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                    Toast.makeText(CustomerLoginActivity.this, "Cannot proceed without mandatory fields.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerLoginActivity.this, "Please fill all fields and don't submit empty fields.", Toast.LENGTH_SHORT).show();
                 }else {
                     cAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(CustomerLoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -149,9 +151,6 @@ public class CustomerLoginActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        /**
-         * Customer Login Process
-         */
         cLogin = (Button) findViewById(R.id.login);
         cLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,11 +158,11 @@ public class CustomerLoginActivity extends AppCompatActivity implements View.OnC
                 final String email = cEmail.getText().toString();
                 final  String password = cPassword.getText().toString();
                 if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                    Toast.makeText(CustomerLoginActivity.this, "Cannot proceed without mandatory fields.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerLoginActivity.this, "Please fill all fields and don't submit empty fields.", Toast.LENGTH_SHORT).show();
                 }else {
                     cAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(CustomerLoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onComplete( Task<AuthResult> task) {
+                        public void onComplete(Task<AuthResult>task) {
                             if(!task.isSuccessful()){
                                 Toast.makeText(CustomerLoginActivity.this, "Hey Buddy, Sign In Error", Toast.LENGTH_SHORT).show();
                             }
@@ -240,5 +239,11 @@ public class CustomerLoginActivity extends AppCompatActivity implements View.OnC
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleResult(result);
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        handler.postDelayed(runnable, 5000); //Timeout Splash
     }
 }

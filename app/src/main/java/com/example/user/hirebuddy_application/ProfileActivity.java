@@ -1,9 +1,12 @@
 package com.example.user.hirebuddy_application;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -11,9 +14,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,10 +28,16 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,29 +50,36 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import common.PredefineMethods;
+
 public class ProfileActivity extends AppCompatActivity {
 
-    private Button backButton;
+    private Button backButton, verifyPassword, updatePassword;
     private String userID, fuelTypeString = "NA";
     private TextView name, email, password, vehicleType,
             vehicleBrand, vehicleFuelType, vehicleNumber;
     private ImageView profilePic;
-    private RelativeLayout main1 , main2 , main3, main4, main5, main6, main7, main8;
-    private Button main2Back, main3Back, main4Back, main5Back, main6Back, main7Back,
+    private RelativeLayout main1 , main2 , main3, main4, main5, main6, main7, main8,
+            passwordMenu1, passwordMenu2;
+    private Button main2Back, main3Back, main4Back, main4BackB, main5Back, main6Back, main7Back,
             main8Back, changeImage, save1, save2 ,save5, save6, save7, save8;
     private Animation slideUp;
     private Animation slideOut;
-    private EditText name2, email2, password2, vn_letters, vn_numberic;
+    private EditText name2, email2, password2, vn_letters, vn_numberic, newPassword, newPasswordReEnter;
     private Uri resultUri;
     private Spinner vehicleType2, vehicleBrand2;
     private RadioGroup vehcielFuelType2;
+    private String CURRENT_USER_EMAIL = "";
+    private FirebaseUser user;
+    private AuthCredential credential;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
 
         name = (TextView) findViewById(R.id.name);
         email = (TextView) findViewById(R.id.email);
@@ -82,6 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
         main2Back = (Button) findViewById(R.id.backbutton2);
         main3Back = (Button) findViewById(R.id.backbutton3);
         main4Back = (Button) findViewById(R.id.backbutton4);
+        main4BackB = (Button) findViewById(R.id.backbutton4b);
         main5Back = (Button) findViewById(R.id.backbutton5);
         main6Back = (Button) findViewById(R.id.backbutton6);
         main7Back = (Button) findViewById(R.id.backbutton7);
@@ -90,6 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
         name2 = (EditText) findViewById(R.id.name2);
         email2 = (EditText) findViewById(R.id.email2);
         password2 = (EditText) findViewById(R.id.password2);
+        verifyPassword = (Button) findViewById(R.id.verify_password);
         changeImage = (Button) findViewById(R.id.change_image);
         save1 = (Button) findViewById(R.id.save_name);
         save2 = (Button) findViewById(R.id.save_email);
@@ -102,10 +122,16 @@ public class ProfileActivity extends AppCompatActivity {
         vehcielFuelType2 = (RadioGroup) findViewById(R.id.vehicleFuelType2);
         vn_letters = (EditText) findViewById(R.id.vehicleNumber_Letters);
         vn_numberic= (EditText) findViewById(R.id.vehicleNumber_Numberic);
+        passwordMenu1 = (RelativeLayout) findViewById(R.id.password_menu1);
+        passwordMenu2 = (RelativeLayout) findViewById(R.id.password_menu2);
+        newPassword = (EditText) findViewById(R.id.password2b);
+        updatePassword = (Button) findViewById(R.id.chnage_password);
+        newPasswordReEnter = (EditText) findViewById(R.id.password2ba);
 
         // Animation
         slideUp = AnimationUtils.loadAnimation(this, R.anim.attribute_slide_up);
         slideOut = AnimationUtils.loadAnimation(this, R.anim.attribute_slide_out);
+
 
         getCustomerUsernameDatabaseInstance();
         getCustomerEmailDatabaseInstance();
@@ -183,8 +209,8 @@ public class ProfileActivity extends AppCompatActivity {
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
                 rootRef.child("CustomerName").setValue(name2.getText().toString());
 
-                Snackbar.make(v, "Name Updated", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(ProfileActivity.this,"Profile Updated" , Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -193,6 +219,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
                 rootRef.child("CustomerEmail").setValue(email2.getText().toString());
+
+                Toast.makeText(ProfileActivity.this,"Profile Updated" , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -203,6 +231,8 @@ public class ProfileActivity extends AppCompatActivity {
                 String vehicleCategoryString = Integer.toString(vehicleType2.getSelectedItemPosition());
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
                 rootRef.child("CustomerVehicleCategory").setValue(vehicleCategoryString);
+
+                Toast.makeText(ProfileActivity.this,"Profile Updated" , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -213,6 +243,8 @@ public class ProfileActivity extends AppCompatActivity {
                 String vehicleBrandString = Integer.toString(vehicleBrand2.getSelectedItemPosition());
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
                 rootRef.child("CustomerVehicleBrand").setValue(vehicleBrandString);
+
+                Toast.makeText(ProfileActivity.this,"Profile Updated" , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -221,6 +253,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
                 rootRef.child("CustomerVehicleFuleType").setValue(fuelTypeString);
+
+                Toast.makeText(ProfileActivity.this,"Profile Updated" , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -230,18 +264,82 @@ public class ProfileActivity extends AppCompatActivity {
                 String value = vn_letters.getText().toString()+"-"+vn_numberic.getText().toString();
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
                 rootRef.child("CustomerVehicleNumber").setValue(value);
+
+                Toast.makeText(ProfileActivity.this,"Profile Updated" , Toast.LENGTH_SHORT).show();
             }
         });
 
         password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(ProfileActivity.this,"Edit feature is unavailable in current version" , Toast.LENGTH_SHORT).show();
-                /*main1.setVisibility(View.INVISIBLE);
-
+                password2.setText("");
+                passwordMenu1.setVisibility(View.VISIBLE);
+                main1.setVisibility(View.INVISIBLE);
                 main4.setVisibility(View.VISIBLE);
-                main4.startAnimation(slideUp);*/
+                main4.startAnimation(slideUp);
+            }
+        });
+
+        verifyPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String user_password = password2.getText().toString();
+                final String user_email = CURRENT_USER_EMAIL;
+                if(TextUtils.isEmpty(user_password)){
+                    PredefineMethods.viewToast(ProfileActivity.this,"Please fill all fields and don't submit empty fields.");
+                }
+                else {
+                    credential = EmailAuthProvider.getCredential(user_email,user_password);
+                    user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                hideKeyBoard();
+                                passwordMenu1.setVisibility(View.INVISIBLE);
+                                newPassword.setText("");
+                                newPasswordReEnter.setText("");
+                                passwordMenu2.setVisibility(View.VISIBLE);
+                                passwordMenu2.startAnimation(slideUp);
+                                updatePassword.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        String user_new_password = newPassword.getText().toString();
+                                        String user_ReEnter_Password = newPasswordReEnter.getText().toString();
+
+                                        if(TextUtils.isEmpty(user_new_password) || TextUtils.isEmpty(user_ReEnter_Password)){
+                                            PredefineMethods.viewToast(ProfileActivity.this,"Please fill all fields and don't submit empty fields.");
+                                        }
+                                        else {
+                                            if(user_new_password.equals(user_ReEnter_Password)){
+                                                user.updatePassword(user_new_password).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()){
+                                                            hideKeyBoard();
+                                                            passwordMenu2.setVisibility(View.INVISIBLE);
+                                                            main1.setVisibility(View.VISIBLE);
+                                                            main1.startAnimation(slideUp);
+                                                            PredefineMethods.viewToast(ProfileActivity.this,"Password Updated");
+                                                        }else{
+                                                            hideKeyBoard();
+                                                            PredefineMethods.viewToast(ProfileActivity.this,"Error Password not Updated.");
+                                                        }
+                                                    }
+                                                });
+                                            }else {
+                                                PredefineMethods.viewToast(ProfileActivity.this,"Passwords Mismatch");
+                                            }
+                                        }
+                                    }
+                                });
+                            }else
+                            {
+                                PredefineMethods.viewToast(ProfileActivity.this,"The password you've entered is incorrect.");
+                            }
+                        }
+                    });
+
+                }
             }
         });
 
@@ -291,6 +389,16 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        main4BackB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passwordMenu2.setVisibility(View.INVISIBLE);
+
+                passwordMenu1.setVisibility(View.VISIBLE);
+                passwordMenu1.startAnimation(slideUp);
+            }
+        });
+
         main5Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -330,6 +438,15 @@ public class ProfileActivity extends AppCompatActivity {
                 main1.startAnimation(slideUp);
             }
         });
+    }
+
+    private void hideKeyBoard() {
+        try {
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void getCustomerVehicleNumberDatabaseInstance() {
@@ -434,6 +551,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
+                    CURRENT_USER_EMAIL = dataSnapshot.getValue().toString();
                     email.setText(dataSnapshot.getValue().toString());
                     email2.setText(dataSnapshot.getValue().toString());
                 }

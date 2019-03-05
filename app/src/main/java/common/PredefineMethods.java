@@ -1,10 +1,24 @@
 package common;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.net.Uri;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.user.hirebuddy_application.MainActivity;
+import com.example.user.hirebuddy_application.ProfileActivity;
 import com.example.user.hirebuddy_application.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class PredefineMethods {
     public static final int NIGHT_HOUR = 18;
@@ -23,6 +37,11 @@ public class PredefineMethods {
 
         return hour;
     }
+
+    public static void viewToast(Context activity, String displayMessage){
+        Toast.makeText(activity,displayMessage,Toast.LENGTH_SHORT).show();
+    }
+
 
 }
 

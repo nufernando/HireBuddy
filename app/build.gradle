@@ -46,6 +46,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:16.0.5'
     implementation 'com.github.jd-alexander:library:1.1.0'
     implementation 'com.kyleduo.switchbutton:library:2.0.0'
+    implementation 'com.sun.mail:android-mail:1.6.0'
+    implementation 'com.sun.mail:android-activation:1.6.0'
+
 
     // implementation 'com.google.android.gms:play-services:11.4.0'
     //   implementation 'com.google.android.gms:play-services-location:6.+'

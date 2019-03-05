@@ -330,80 +330,199 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/layout_d1"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="1dp"
-            android:layout_centerHorizontal="true">
+            android:id="@+id/password_menu1"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/layout_d1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="1dp"
+                android:layout_centerHorizontal="true">
+
+                <Button
+                    android:id="@+id/backbutton4"
+                    android:layout_width="35dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/ic_arrow_back_"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/heading01d"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Verify Password"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+
+            <EditText
+                android:id="@+id/password2"
+                android:layout_below="@+id/heading01d"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/century_gothic"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/password_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/password2"
+                android:text="For your security, please enter current password"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                />
 
             <Button
-                android:id="@+id/backbutton4"
-                android:layout_width="35dp"
-                android:layout_height="33dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/ic_arrow_back_"/>
-
+                android:id="@+id/verify_password"
+                android:layout_below="@+id/password_description"
+                android:layout_marginTop="35dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="VERIFY PASSWORD"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/century_gothic"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/white"
+                />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/heading01d"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enter a new password"
-            android:layout_marginTop="100dp"
-            android:layout_marginLeft="15dp"
-            android:fontFamily="@font/century_gothic"
-            android:textColor="@color/white"
-            android:textSize="18dp"
-            />
+        <RelativeLayout
+            android:id="@+id/password_menu2"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/password2"
-            android:layout_below="@+id/heading01d"
-            android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/et_bg"
-            android:fontFamily="@font/century_gothic"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            <RelativeLayout
+                android:id="@+id/layout_d1b"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="1dp"
+                android:layout_centerHorizontal="true">
 
-        <TextView
-            android:id="@+id/password_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/password2"
-            android:text="Secure passwords are at least 8 characters long and include numbers and symbols"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:fontFamily="@font/century_gothic"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            />
+                <Button
+                    android:id="@+id/backbutton4b"
+                    android:layout_width="35dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/ic_arrow_back_"/>
 
-        <Button
-            android:id="@+id/update_password"
-            android:layout_below="@+id/password_description"
-            android:layout_marginTop="35dp"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:text="UPDATE PASSWORD"
-            android:textColor="@color/colorPrimaryDark"
-            android:fontFamily="@font/century_gothic"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:background="@color/white"
-            />
-    </RelativeLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/heading01db"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter a new password"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+
+            <EditText
+                android:id="@+id/password2b"
+                android:layout_below="@+id/heading01db"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/century_gothic"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:layout_below="@+id/password2b"
+                android:id="@+id/heading01dba"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Re-enter new password"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+
+            <EditText
+                android:id="@+id/password2ba"
+                android:layout_below="@+id/heading01dba"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/century_gothic"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/password_descriptionb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/password2ba"
+                android:text="Secure passwords are at least 8 characters long and include numbers and symbols"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/century_gothic"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                />
+
+            <Button
+                android:id="@+id/chnage_password"
+                android:layout_below="@+id/password_descriptionb"
+                android:layout_marginTop="35dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="UPDATE PASSWORD"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/century_gothic"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="@color/white"
+                />
+        </RelativeLayout>
+</RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/main5"

@@ -11,9 +11,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,10 +24,14 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,28 +43,34 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
+import common.PredefineMethods;
 public class MechanicProfileActivity extends AppCompatActivity {
 
-    private Button backButton;
+    private Button backButton, verifyPassword, updatePassword;
     private String userID;
     private TextView name, email, password, profession;
     private ImageView profilePic;
-    private RelativeLayout main1 , main2 , main3, main4, main5;
-    private Button main2Back, main3Back, main4Back, main5Back, changeImage, save1, save2, save5;
+    private RelativeLayout main1 , main2 , main3, main4, main5,
+            passwordMenu1, passwordMenu2;
+    private Button main2Back, main3Back, main4Back, main4BackB, main5Back,
+            changeImage, save1, save2, save5;
     private RadioGroup professionType;
     private Animation slideUp;
     private Animation slideOut;
-    private EditText name2, email2, password2;
+    private EditText name2, email2, password2, newPassword, newPasswordReEnter;
     private Uri resultUri;
     private String professionTypeValue = "";
+    private String CURRENT_USER_EMAIL = "";
+    private FirebaseUser user;
+    private AuthCredential credential;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mechanic_profile);
 
-        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
 
         name = (TextView) findViewById(R.id.name);
         email = (TextView) findViewById(R.id.email);
@@ -73,15 +85,22 @@ public class MechanicProfileActivity extends AppCompatActivity {
         main2Back = (Button) findViewById(R.id.backbutton2);
         main3Back = (Button) findViewById(R.id.backbutton3);
         main4Back = (Button) findViewById(R.id.backbutton4);
+        main4BackB = (Button) findViewById(R.id.backbutton4b);
         main5Back = (Button) findViewById(R.id.backbutton5);
         name2 = (EditText) findViewById(R.id.name2);
         email2 = (EditText) findViewById(R.id.email2);
         password2 = (EditText) findViewById(R.id.password2);
+        verifyPassword = (Button) findViewById(R.id.verify_password);
         changeImage = (Button) findViewById(R.id.change_image);
         save1 = (Button) findViewById(R.id.save_name);
         save2 = (Button) findViewById(R.id.save_email);
         save5 = (Button) findViewById(R.id.save_profession);
         professionType = (RadioGroup) findViewById(R.id.mechanicType);
+        passwordMenu1 = (RelativeLayout) findViewById(R.id.password_menu1);
+        passwordMenu2 = (RelativeLayout) findViewById(R.id.password_menu2);
+        newPassword = (EditText) findViewById(R.id.password2b);
+        updatePassword = (Button) findViewById(R.id.chnage_password);
+        newPasswordReEnter = (EditText) findViewById(R.id.password2ba);
 
         // Animation
         slideUp = AnimationUtils.loadAnimation(this, R.anim.attribute_slide_up);
@@ -157,14 +176,77 @@ public class MechanicProfileActivity extends AppCompatActivity {
         password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(MechanicProfileActivity.this,"Edit feature is unavailable in current version" , Toast.LENGTH_SHORT).show();
-                /*main1.setVisibility(View.INVISIBLE);
-
+                password2.setText("");
+                passwordMenu1.setVisibility(View.VISIBLE);
+                main1.setVisibility(View.INVISIBLE);
                 main4.setVisibility(View.VISIBLE);
-                main4.startAnimation(slideUp);*/
+                main4.startAnimation(slideUp);
             }
         });
+
+        verifyPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String user_password = password2.getText().toString();
+                final String user_email = CURRENT_USER_EMAIL;
+                if(TextUtils.isEmpty(user_password)){
+                    PredefineMethods.viewToast(MechanicProfileActivity.this,"Please fill all fields and don't submit empty fields.");
+                }
+                else {
+                    credential = EmailAuthProvider.getCredential(user_email,user_password);
+                    user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                hideKeyBoard();
+                                passwordMenu1.setVisibility(View.INVISIBLE);
+                                newPassword.setText("");
+                                newPasswordReEnter.setText("");
+                                passwordMenu2.setVisibility(View.VISIBLE);
+                                passwordMenu2.startAnimation(slideUp);
+                                updatePassword.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        String user_new_password = newPassword.getText().toString();
+                                        String user_ReEnter_Password = newPasswordReEnter.getText().toString();
+
+                                        if(TextUtils.isEmpty(user_new_password) || TextUtils.isEmpty(user_ReEnter_Password)){
+                                            PredefineMethods.viewToast(MechanicProfileActivity.this,"Please fill all fields and don't submit empty fields.");
+                                        }
+                                        else {
+                                            if(user_new_password.equals(user_ReEnter_Password)){
+                                                user.updatePassword(user_new_password).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()){
+                                                            hideKeyBoard();
+                                                            passwordMenu2.setVisibility(View.INVISIBLE);
+                                                            main1.setVisibility(View.VISIBLE);
+                                                            main1.startAnimation(slideUp);
+                                                            PredefineMethods.viewToast(MechanicProfileActivity.this,"Password Updated");
+                                                        }else{
+                                                            hideKeyBoard();
+                                                            PredefineMethods.viewToast(MechanicProfileActivity.this,"Error Password not Updated.");
+                                                        }
+                                                    }
+                                                });
+                                            }else {
+                                                PredefineMethods.viewToast(MechanicProfileActivity.this,"Passwords Mismatch");
+                                            }
+                                        }
+                                    }
+                                });
+                            }else
+                            {
+                                PredefineMethods.viewToast(MechanicProfileActivity.this,"The password you've entered is incorrect.");
+                            }
+                        }
+                    });
+
+                }
+            }
+        });
+
 
         changeImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,6 +297,16 @@ public class MechanicProfileActivity extends AppCompatActivity {
             }
         });
 
+        main4BackB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passwordMenu2.setVisibility(View.INVISIBLE);
+
+                passwordMenu1.setVisibility(View.VISIBLE);
+                passwordMenu1.startAnimation(slideUp);
+            }
+        });
+
         main5Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +316,15 @@ public class MechanicProfileActivity extends AppCompatActivity {
                 main1.startAnimation(slideUp);
             }
         });
+    }
+
+    private void hideKeyBoard() {
+        try {
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void getMechanicProfessionDatabaseInstance() {
@@ -270,6 +371,7 @@ public class MechanicProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
+                    CURRENT_USER_EMAIL = dataSnapshot.getValue().toString();
                     email.setText(dataSnapshot.getValue().toString());
                     email2.setText(dataSnapshot.getValue().toString());
                 }
